@@ -1,20 +1,33 @@
-import streamlit as st
+    import streamlit as st
 import pandas as pd
 import joblib
 
-# Page configuration
+# ==============================
+# PAGE CONFIGURATION
+# ==============================
+
 st.set_page_config(
     page_title="Student360 AI",
     page_icon="🎓",
     layout="centered"
 )
 
-# Load trained model
+# ==============================
+# LOAD MODEL
+# ==============================
+
 model = joblib.load("student360_model.pkl")
 
-# Title
+# ==============================
+# TITLE
+# ==============================
+
 st.title("🎓 Student360 AI")
-st.caption("AI-Powered Student Performance & Academic Risk Analysis")
+
+st.caption(
+    "AI-Powered Student Performance & Academic Risk Analysis"
+)
+
 st.subheader("AI-Powered Student Performance Predictor")
 
 st.write(
@@ -24,7 +37,10 @@ st.write(
 
 st.divider()
 
-# Student information
+# ==============================
+# STUDENT INFORMATION
+# ==============================
+
 st.header("📋 Student Information")
 
 semester = st.number_input(
@@ -110,13 +126,17 @@ career_goal = st.selectbox(
     ]
 )
 
-# What-If Simulator
+# ==============================
+# WHAT-IF SIMULATOR
+# ==============================
+
 st.divider()
+
 st.subheader("🔮 What-If Performance Simulator")
 
 st.write(
     "Change your study hours and attendance to see how "
-    "the predicted performance may change."
+    "the model's predicted performance may change."
 )
 
 whatif_study_hours = st.slider(
@@ -149,18 +169,35 @@ if st.button("🔮 Simulate Performance"):
         "Skill_Level": [skill]
     })
 
-    whatif_score = float(model.predict(whatif_student)[0])
-    whatif_score = max(0, min(100, whatif_score))
+    whatif_score = float(
+        model.predict(whatif_student)[0]
+    )
+
+    whatif_score = max(
+        0,
+        min(100, whatif_score)
+    )
 
     st.metric(
         "What-If Predicted Performance",
         f"{whatif_score:.2f} / 100"
     )
 
-# Prediction button
+    st.caption(
+        "This is a model-based sensitivity simulation, "
+        "not a guarantee of actual future performance."
+    )
+
+# ==============================
+# MAIN PREDICTION
+# ==============================
+
 if st.button("🚀 Predict My Performance"):
 
-    # Prepare student data
+    # --------------------------
+    # PREPARE STUDENT DATA
+    # --------------------------
+
     new_student = pd.DataFrame({
         "Semester": [semester],
         "CGPA": [cgpa],
@@ -173,13 +210,23 @@ if st.button("🚀 Predict My Performance"):
         "Skill_Level": [skill]
     })
 
-    # ML prediction
-    predicted_score = float(model.predict(new_student)[0])
+    # --------------------------
+    # ML PREDICTION
+    # --------------------------
 
-    # Keep score between 0 and 100
-    predicted_score = max(0, min(100, predicted_score))
+    predicted_score = float(
+        model.predict(new_student)[0]
+    )
 
-    # Risk calculation
+    predicted_score = max(
+        0,
+        min(100, predicted_score)
+    )
+
+    # --------------------------
+    # RISK CALCULATION
+    # --------------------------
+
     if predicted_score < 50:
         risk = "High"
     elif predicted_score < 70:
@@ -187,11 +234,18 @@ if st.button("🚀 Predict My Performance"):
     else:
         risk = "Low"
 
-    # Results
+    # ==========================
+    # RESULTS
+    # ==========================
+
     st.divider()
+
     st.header("📊 Your Results")
 
-    # Performance metrics
+    # --------------------------
+    # PERFORMANCE METRICS
+    # --------------------------
+
     col1, col2 = st.columns(2)
 
     with col1:
@@ -206,7 +260,10 @@ if st.button("🚀 Predict My Performance"):
             risk
         )
 
-    # Performance dashboard
+    # ==========================
+    # PERFORMANCE DASHBOARD
+    # ==========================
+
     st.subheader("📈 Performance Dashboard")
 
     chart_data = pd.DataFrame({
@@ -230,7 +287,10 @@ if st.button("🚀 Predict My Performance"):
         chart_data.set_index("Area")
     )
 
-    # Strengths and weaknesses
+    # ==========================
+    # STRENGTHS & WEAKNESSES
+    # ==========================
+
     areas = {
         "Attendance": attendance,
         "Internal Marks": internal,
@@ -241,188 +301,279 @@ if st.button("🚀 Predict My Performance"):
     }
 
     strong_areas = [
-        name for name, score in areas.items()
+        name
+        for name, score in areas.items()
         if score >= 75
     ]
 
     weak_areas = [
-        name for name, score in areas.items()
+        name
+        for name, score in areas.items()
         if score < 60
     ]
 
-    # Strong areas
+    # --------------------------
+    # STRONG AREAS
+    # --------------------------
+
     st.subheader("💪 Strong Areas")
 
     if strong_areas:
+
         for area in strong_areas:
             st.write("✅", area)
-    else:
-        st.write("No major strong area identified.")
 
-    # Areas to improve
+    else:
+
+        st.write(
+            "No major strong area identified."
+        )
+
+    # --------------------------
+    # AREAS TO IMPROVE
+    # --------------------------
+
     st.subheader("⚠️ Areas to Improve")
 
     if weak_areas:
+
         for area in weak_areas:
             st.write("🔸", area)
+
     else:
-        st.write("No major weak area identified.")
 
-         # Personalized Study Plan
+        st.write(
+            "No major weak area identified."
+        )
+
+    # ==========================
+    # PERSONALIZED STUDY PLAN
+    # ==========================
+
     st.divider()
-    st.subheader("📚 Personalized Weekly Study Plan")
 
-    # Calculate recommended daily study time
-    recommended_hours = max(2.0, study_hours + 1.0)
+    st.subheader(
+        "📚 Personalized Weekly Study Plan"
+    )
+
+    # Recommended study time
+
+    recommended_hours = max(
+        2.0,
+        study_hours + 1.0
+    )
 
     st.info(
         f"🎯 Recommended focused study time: "
         f"{recommended_hours:.1f} hours/day"
     )
 
+    # Weekly plan
+
     if weak_areas:
 
         st.write(
-            f"Based on your current performance, focus on these areas: "
-            f"{', '.join(weak_areas)}"
+            "Based on your current performance, "
+            "focus on these areas:"
         )
-    
 
-     st.write(
-            f"Based on your current performance, focus on these areas: "
-            f"{', '.join(weak_areas)}"
+        st.write(
+            ", ".join(weak_areas)
         )
 
         st.write("### 🗓️ This Week")
 
         if "Attendance" in weak_areas:
+
             st.write(
-                "• Monday: Attend all classes and revise missed topics."
+                "• Monday: Attend all classes "
+                "and revise missed topics."
             )
 
         if "Internal Marks" in weak_areas:
+
             st.write(
-                "• Tuesday: Revise important internal-exam topics."
+                "• Tuesday: Revise important "
+                "internal-exam topics."
             )
 
         if "Assignment Score" in weak_areas:
+
             st.write(
-                "• Wednesday: Complete and review pending assignments."
+                "• Wednesday: Complete and review "
+                "pending assignments."
             )
 
         if "Quiz Score" in weak_areas:
+
             st.write(
                 "• Thursday: Practice topic-wise quizzes."
             )
 
         if "Study Hours" in weak_areas:
+
             st.write(
-                "• Friday: Increase focused study time by 30–60 minutes."
+                "• Friday: Increase focused study "
+                "time by 30–60 minutes."
             )
 
         if "CGPA" in weak_areas:
+
             st.write(
-                "• Saturday: Revise your weakest academic subjects."
+                "• Saturday: Revise your weakest "
+                "academic subjects."
             )
 
         st.write(
-            "• Sunday: Review your weekly progress and plan the next week."
+            "• Sunday: Review your weekly progress "
+            "and plan the next week."
         )
 
     else:
+
         st.success(
             "🎉 No major weak area detected. "
             "Continue your current study routine."
         )
 
-    # Personalized Recommendations
+    # ==========================
+    # PERSONALIZED RECOMMENDATIONS
+    # ==========================
+
     st.divider()
-    st.subheader("💡 Personalized Recommendations")
+
+    st.subheader(
+        "💡 Personalized Recommendations"
+    )
 
     recommendations = []
 
     if attendance < 75:
+
         recommendations.append(
-            "Improve attendance and maintain at least 75% attendance."
+            "Improve attendance and maintain "
+            "at least 75% attendance."
         )
 
     if internal < 60:
+
         recommendations.append(
-            "Focus on internal exams and revise class notes regularly."
+            "Focus on internal exams and revise "
+            "class notes regularly."
         )
 
     if assignment < 60:
+
         recommendations.append(
-            "Complete assignments on time and improve assignment quality."
+            "Complete assignments on time and "
+            "improve assignment quality."
         )
 
     if quiz < 60:
+
         recommendations.append(
-            "Practice more quizzes and topic-wise tests."
+            "Practice more quizzes and "
+            "topic-wise tests."
         )
 
     if study_hours < 2:
+
         recommendations.append(
-            "Gradually increase daily study time to 2–3 hours."
+            "Gradually increase daily study "
+            "time to 2–3 hours."
         )
 
     if cgpa < 6.5:
+
         recommendations.append(
-            "Focus on weak subjects and create a consistent weekly study plan."
+            "Focus on weak subjects and create "
+            "a consistent weekly study plan."
         )
 
     if backlogs > 0:
+
         recommendations.append(
-            "Prioritize clearing backlogs while maintaining current-semester studies."
+            "Prioritize clearing backlogs while "
+            "maintaining current-semester studies."
         )
 
     if skill < 3:
+
         recommendations.append(
-            "Develop technical skills through coding practice and small projects."
+            "Develop technical skills through "
+            "coding practice and small projects."
         )
 
-    # Career-specific recommendations
+    # --------------------------
+    # CAREER RECOMMENDATIONS
+    # --------------------------
+
     career_recommendations = {
+
         "AI/ML Engineer":
-            "Build Python, NumPy, Pandas, Machine Learning and AI projects.",
+            "Build Python, NumPy, Pandas, "
+            "Machine Learning and AI projects.",
 
         "Data Scientist":
-            "Focus on Python, SQL, statistics, data analysis and visualization.",
+            "Focus on Python, SQL, statistics, "
+            "data analysis and visualization.",
 
         "Software Developer":
-            "Strengthen DSA, OOP, Git and software development projects.",
+            "Strengthen DSA, OOP, Git and "
+            "software development projects.",
 
         "Data Analyst":
-            "Learn SQL, Excel, Python, Pandas and data visualization.",
+            "Learn SQL, Excel, Python, Pandas "
+            "and data visualization.",
 
         "Cybersecurity":
-            "Learn networking, Linux, security fundamentals and ethical security practices.",
+            "Learn networking, Linux, security "
+            "fundamentals and ethical security practices.",
 
         "Cloud/DevOps":
-            "Learn Linux, Git, Docker, cloud fundamentals and CI/CD.",
+            "Learn Linux, Git, Docker, cloud "
+            "fundamentals and CI/CD.",
 
         "Higher Studies":
-            "Focus on academic performance, core subjects and relevant entrance exams.",
+            "Focus on academic performance, "
+            "core subjects and relevant entrance exams.",
 
         "Other":
-            "Build strong programming fundamentals and complete practical projects."
+            "Build strong programming fundamentals "
+            "and complete practical projects."
     }
 
     recommendations.append(
         career_recommendations[career_goal]
     )
 
+    # --------------------------
+    # DISPLAY RECOMMENDATIONS
+    # --------------------------
+
     if recommendations:
-        for i, recommendation in enumerate(recommendations, 1):
-            st.write(f"**{i}.** {recommendation}")
+
+        for i, recommendation in enumerate(
+            recommendations,
+            1
+        ):
+
+            st.write(
+                f"**{i}.** {recommendation}"
+            )
+
     else:
+
         st.success(
-            "Your current academic indicators are satisfactory. "
-            "Continue your current study routine."
+            "Your current academic indicators are "
+            "satisfactory. Continue your current study routine."
         )
 
 
-# Prototype disclaimer
+# ==============================
+# PROTOTYPE DISCLAIMER
+# ==============================
+
 st.divider()
 
 st.caption(
