@@ -95,6 +95,7 @@ skill = st.slider(
     max_value=5,
     value=3
 )
+
 career_goal = st.selectbox(
     "Career Goal",
     [
@@ -109,9 +110,11 @@ career_goal = st.selectbox(
     ]
 )
 
+
 # Prediction button
 if st.button("🚀 Predict My Performance"):
 
+    # Prepare student data
     new_student = pd.DataFrame({
         "Semester": [semester],
         "CGPA": [cgpa],
@@ -138,62 +141,58 @@ if st.button("🚀 Predict My Performance"):
     else:
         risk = "Low"
 
+    # Results
     st.divider()
+    st.header("📊 Your Results")
 
-st.divider()
+    # Performance metrics
+    col1, col2 = st.columns(2)
 
-# Results
-st.header("📊 Your Results")
+    with col1:
+        st.metric(
+            "Predicted Performance",
+            f"{predicted_score:.2f} / 100"
+        )
 
-# Performance metrics
-col1, col2 = st.columns(2)
+    with col2:
+        st.metric(
+            "Academic Risk",
+            risk
+        )
 
-with col1:
-    st.metric(
-        "Predicted Performance",
-        f"{predicted_score:.2f} / 100"
+    # Performance dashboard
+    st.subheader("📈 Performance Dashboard")
+
+    chart_data = pd.DataFrame({
+        "Area": [
+            "CGPA",
+            "Attendance",
+            "Internal Marks",
+            "Assignment",
+            "Quiz"
+        ],
+        "Score": [
+            cgpa * 10,
+            attendance,
+            internal,
+            assignment,
+            quiz
+        ]
+    })
+
+    st.bar_chart(
+        chart_data.set_index("Area")
     )
-
-with col2:
-    st.metric(
-        "Academic Risk",
-        risk
-    )
-
-# Performance dashboard
-st.subheader("📈 Performance Dashboard")
-
-chart_data = pd.DataFrame({
-    "Area": [
-        "CGPA",
-        "Attendance",
-        "Internal Marks",
-        "Assignment",
-        "Quiz"
-    ],
-    "Score": [
-        cgpa * 10,
-        attendance,
-        internal,
-        assignment,
-        quiz
-    ]
-})
-
-st.bar_chart(
-    chart_data.set_index("Area")
-)
-
 
     # Strengths and weaknesses
-areas = {
-    "Attendance": attendance,
-    "Internal Marks": internal,
-    "Assignment Score": assignment,
-    "Quiz Score": quiz,
-    "Study Hours": study_hours,
-    "CGPA": cgpa * 10
-}
+    areas = {
+        "Attendance": attendance,
+        "Internal Marks": internal,
+        "Assignment Score": assignment,
+        "Quiz Score": quiz,
+        "Study Hours": study_hours,
+        "CGPA": cgpa * 10
+    }
 
     strong_areas = [
         name for name, score in areas.items()
@@ -205,6 +204,7 @@ areas = {
         if score < 60
     ]
 
+    # Strong areas
     st.subheader("💪 Strong Areas")
 
     if strong_areas:
@@ -213,6 +213,7 @@ areas = {
     else:
         st.write("No major strong area identified.")
 
+    # Areas to improve
     st.subheader("⚠️ Areas to Improve")
 
     if weak_areas:
@@ -220,46 +221,62 @@ areas = {
             st.write("🔸", area)
     else:
         st.write("No major weak area identified.")
-        
-st.divider()
 
-# Personalized Study Plan
-st.subheader("📚 Personalized Weekly Study Plan")
+    # Personalized Study Plan
+    st.divider()
+    st.subheader("📚 Personalized Weekly Study Plan")
 
-if weak_areas:
-    st.write(
-        f"Based on your current performance, focus on these areas: "
-        f"{', '.join(weak_areas)}"
-    )
+    if weak_areas:
 
-    st.write("### 🗓️ This Week")
+        st.write(
+            f"Based on your current performance, focus on these areas: "
+            f"{', '.join(weak_areas)}"
+        )
 
-    if "Attendance" in weak_areas:
-        st.write("• Monday: Attend all classes and revise missed topics.")
+        st.write("### 🗓️ This Week")
 
-    if "Internal Marks" in weak_areas:
-        st.write("• Tuesday: Revise important internal-exam topics.")
+        if "Attendance" in weak_areas:
+            st.write(
+                "• Monday: Attend all classes and revise missed topics."
+            )
 
-    if "Assignment Score" in weak_areas:
-        st.write("• Wednesday: Complete and review pending assignments.")
+        if "Internal Marks" in weak_areas:
+            st.write(
+                "• Tuesday: Revise important internal-exam topics."
+            )
 
-    if "Quiz Score" in weak_areas:
-        st.write("• Thursday: Practice topic-wise quizzes.")
+        if "Assignment Score" in weak_areas:
+            st.write(
+                "• Wednesday: Complete and review pending assignments."
+            )
 
-    if "Study Hours" in weak_areas:
-        st.write("• Friday: Increase focused study time by 30–60 minutes.")
+        if "Quiz Score" in weak_areas:
+            st.write(
+                "• Thursday: Practice topic-wise quizzes."
+            )
 
-    if "CGPA" in weak_areas:
-        st.write("• Saturday: Revise your weakest academic subjects.")
+        if "Study Hours" in weak_areas:
+            st.write(
+                "• Friday: Increase focused study time by 30–60 minutes."
+            )
 
-    st.write("• Sunday: Review your weekly progress and plan the next week.")
+        if "CGPA" in weak_areas:
+            st.write(
+                "• Saturday: Revise your weakest academic subjects."
+            )
 
-else:
-    st.success(
-        
-        "🎉 No major weak area detected. Continue your current study routine."
-    )
-    # Recommendations
+        st.write(
+            "• Sunday: Review your weekly progress and plan the next week."
+        )
+
+    else:
+        st.success(
+            "🎉 No major weak area detected. "
+            "Continue your current study routine."
+        )
+
+    # Personalized Recommendations
+    st.divider()
     st.subheader("💡 Personalized Recommendations")
 
     recommendations = []
@@ -286,7 +303,7 @@ else:
 
     if study_hours < 2:
         recommendations.append(
-            "Gradually increase daily study time to 2-3 hours."
+            "Gradually increase daily study time to 2–3 hours."
         )
 
     if cgpa < 6.5:
@@ -303,16 +320,32 @@ else:
         recommendations.append(
             "Develop technical skills through coding practice and small projects."
         )
-            # Career-specific recommendations
+
+    # Career-specific recommendations
     career_recommendations = {
-        "AI/ML Engineer": "Build Python, NumPy, Pandas, Machine Learning and AI projects.",
-        "Data Scientist": "Focus on Python, SQL, statistics, data analysis and visualization.",
-        "Software Developer": "Strengthen DSA, OOP, Git and software development projects.",
-        "Data Analyst": "Learn SQL, Excel, Python, Pandas and data visualization.",
-        "Cybersecurity": "Learn networking, Linux, security fundamentals and ethical security practices.",
-        "Cloud/DevOps": "Learn Linux, Git, Docker, cloud fundamentals and CI/CD.",
-        "Higher Studies": "Focus on academic performance, core subjects and relevant entrance exams.",
-        "Other": "Build strong programming fundamentals and complete practical projects."
+        "AI/ML Engineer":
+            "Build Python, NumPy, Pandas, Machine Learning and AI projects.",
+
+        "Data Scientist":
+            "Focus on Python, SQL, statistics, data analysis and visualization.",
+
+        "Software Developer":
+            "Strengthen DSA, OOP, Git and software development projects.",
+
+        "Data Analyst":
+            "Learn SQL, Excel, Python, Pandas and data visualization.",
+
+        "Cybersecurity":
+            "Learn networking, Linux, security fundamentals and ethical security practices.",
+
+        "Cloud/DevOps":
+            "Learn Linux, Git, Docker, cloud fundamentals and CI/CD.",
+
+        "Higher Studies":
+            "Focus on academic performance, core subjects and relevant entrance exams.",
+
+        "Other":
+            "Build strong programming fundamentals and complete practical projects."
     }
 
     recommendations.append(
@@ -328,6 +361,8 @@ else:
             "Continue your current study routine."
         )
 
+
+# Prototype disclaimer
 st.divider()
 
 st.caption(
