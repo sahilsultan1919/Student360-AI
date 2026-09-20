@@ -220,7 +220,45 @@ st.bar_chart(
             st.write("🔸", area)
     else:
         st.write("No major weak area identified.")
+        
+st.divider()
 
+# Personalized Study Plan
+st.subheader("📚 Personalized Weekly Study Plan")
+
+if weak_areas:
+    st.write(
+        f"Based on your current performance, focus on these areas: "
+        f"{', '.join(weak_areas)}"
+    )
+
+    st.write("### 🗓️ This Week")
+
+    if "Attendance" in weak_areas:
+        st.write("• Monday: Attend all classes and revise missed topics.")
+
+    if "Internal Marks" in weak_areas:
+        st.write("• Tuesday: Revise important internal-exam topics.")
+
+    if "Assignment Score" in weak_areas:
+        st.write("• Wednesday: Complete and review pending assignments.")
+
+    if "Quiz Score" in weak_areas:
+        st.write("• Thursday: Practice topic-wise quizzes.")
+
+    if "Study Hours" in weak_areas:
+        st.write("• Friday: Increase focused study time by 30–60 minutes.")
+
+    if "CGPA" in weak_areas:
+        st.write("• Saturday: Revise your weakest academic subjects.")
+
+    st.write("• Sunday: Review your weekly progress and plan the next week.")
+
+else:
+    st.success(
+        
+        "🎉 No major weak area detected. Continue your current study routine."
+    )
     # Recommendations
     st.subheader("💡 Personalized Recommendations")
 
