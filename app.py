@@ -14,6 +14,7 @@ model = joblib.load("student360_model.pkl")
 
 # Title
 st.title("🎓 Student360 AI")
+st.caption("AI-Powered Student Performance & Academic Risk Analysis")
 st.subheader("AI-Powered Student Performance Predictor")
 
 st.write(
