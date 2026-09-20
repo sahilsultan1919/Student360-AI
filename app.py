@@ -286,6 +286,38 @@ if st.button("🚀 Predict My Performance"):
     st.bar_chart(
         chart_data.set_index("Area")
     )
+    
+        # ==========================
+    # EXPLAINABLE AI
+    # ==========================
+
+    st.subheader("🔍 Why This Prediction?")
+
+    feature_names = [
+        "Semester",
+        "CGPA",
+        "Attendance",
+        "Internal Marks",
+        "Assignment Score",
+        "Quiz Score",
+        "Study Hours",
+        "Backlogs",
+        "Technical Skill"
+    ]
+
+    importance_data = pd.DataFrame({
+        "Feature": feature_names,
+        "Importance": model.feature_importances_
+    })
+
+    importance_data = importance_data.sort_values(
+        "Importance",
+        ascending=False
+    )
+
+    st.bar_chart(
+        importance_data.set_index("Feature")
+    )
 
     # ==========================
     # STRENGTHS & WEAKNESSES
