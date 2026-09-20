@@ -225,6 +225,14 @@ if st.button("🚀 Predict My Performance"):
     # Personalized Study Plan
     st.divider()
     st.subheader("📚 Personalized Weekly Study Plan")
+    
+    # Calculate recommended daily study time
+recommended_hours = max(2.0, study_hours + 1.0)
+
+st.info(
+    f"🎯 Recommended focused study time: "
+    f"{recommended_hours:.1f} hours/day"
+)
 
     if weak_areas:
 
