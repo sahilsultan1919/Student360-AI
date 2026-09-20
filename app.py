@@ -318,6 +318,40 @@ if st.button("🚀 Predict My Performance"):
     st.bar_chart(
         importance_data.set_index("Feature")
     )
+        # ==========================
+    # AI PERFORMANCE SUMMARY
+    # ==========================
+
+    st.subheader("🧠 AI Performance Summary")
+
+    if predicted_score >= 80:
+        summary = (
+            "Your predicted performance is strong. "
+            "Maintain your current academic routine and continue "
+            "developing your technical skills."
+        )
+
+    elif predicted_score >= 70:
+        summary = (
+            "Your predicted performance is satisfactory. "
+            "Focus on your weaker areas to improve your overall performance."
+        )
+
+    elif predicted_score >= 50:
+        summary = (
+            "Your predicted performance needs improvement. "
+            "Follow the personalized study plan and focus on your weak areas."
+        )
+
+    else:
+        summary = (
+            "Your predicted performance indicates a higher academic risk. "
+            "Focus immediately on weak areas, study consistency, "
+            "and clearing backlogs."
+        )
+
+    st.info(summary)
+    
 
     # ==========================
     # STRENGTHS & WEAKNESSES
