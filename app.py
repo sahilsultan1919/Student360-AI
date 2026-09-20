@@ -140,15 +140,50 @@ if st.button("🚀 Predict My Performance"):
 
     st.divider()
 
-    # Results
-    st.header("📊 Your Results")
+st.divider()
 
+# Results
+st.header("📊 Your Results")
+
+# Performance metrics
+col1, col2 = st.columns(2)
+
+with col1:
     st.metric(
         "Predicted Performance",
         f"{predicted_score:.2f} / 100"
     )
 
-    st.write(f"### Academic Risk Level: {risk}")
+with col2:
+    st.metric(
+        "Academic Risk",
+        risk
+    )
+
+# Performance dashboard
+st.subheader("📈 Performance Dashboard")
+
+chart_data = pd.DataFrame({
+    "Area": [
+        "CGPA",
+        "Attendance",
+        "Internal Marks",
+        "Assignment",
+        "Quiz"
+    ],
+    "Score": [
+        cgpa * 10,
+        attendance,
+        internal,
+        assignment,
+        quiz
+    ]
+})
+
+st.bar_chart(
+    chart_data.set_index("Area")
+)
+
 
     # Strengths and weaknesses
     areas = {
