@@ -230,6 +230,21 @@ if st.button("🚀 Predict My Performance"):
         recommendations.append(
             "Develop technical skills through coding practice and small projects."
         )
+            # Career-specific recommendations
+    career_recommendations = {
+        "AI/ML Engineer": "Build Python, NumPy, Pandas, Machine Learning and AI projects.",
+        "Data Scientist": "Focus on Python, SQL, statistics, data analysis and visualization.",
+        "Software Developer": "Strengthen DSA, OOP, Git and software development projects.",
+        "Data Analyst": "Learn SQL, Excel, Python, Pandas and data visualization.",
+        "Cybersecurity": "Learn networking, Linux, security fundamentals and ethical security practices.",
+        "Cloud/DevOps": "Learn Linux, Git, Docker, cloud fundamentals and CI/CD.",
+        "Higher Studies": "Focus on academic performance, core subjects and relevant entrance exams.",
+        "Other": "Build strong programming fundamentals and complete practical projects."
+    }
+
+    recommendations.append(
+        career_recommendations[career_goal]
+    )
 
     if recommendations:
         for i, recommendation in enumerate(recommendations, 1):
