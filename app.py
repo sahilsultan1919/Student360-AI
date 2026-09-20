@@ -110,6 +110,52 @@ career_goal = st.selectbox(
     ]
 )
 
+# What-If Simulator
+st.divider()
+st.subheader("🔮 What-If Performance Simulator")
+
+st.write(
+    "Change your study hours and attendance to see how "
+    "the predicted performance may change."
+)
+
+whatif_study_hours = st.slider(
+    "What-If Study Hours/Day",
+    min_value=0.0,
+    max_value=12.0,
+    value=float(study_hours),
+    step=0.5
+)
+
+whatif_attendance = st.slider(
+    "What-If Attendance (%)",
+    min_value=0.0,
+    max_value=100.0,
+    value=float(attendance),
+    step=1.0
+)
+
+if st.button("🔮 Simulate Performance"):
+
+    whatif_student = pd.DataFrame({
+        "Semester": [semester],
+        "CGPA": [cgpa],
+        "Attendance": [whatif_attendance],
+        "Internal_Marks": [internal],
+        "Assignment_Score": [assignment],
+        "Quiz_Score": [quiz],
+        "Study_Hours": [whatif_study_hours],
+        "Backlogs": [backlogs],
+        "Skill_Level": [skill]
+    })
+
+    whatif_score = float(model.predict(whatif_student)[0])
+    whatif_score = max(0, min(100, whatif_score))
+
+    st.metric(
+        "What-If Predicted Performance",
+        f"{whatif_score:.2f} / 100"
+    )
 
 # Prediction button
 if st.button("🚀 Predict My Performance"):
