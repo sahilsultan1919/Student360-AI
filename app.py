@@ -337,6 +337,40 @@ if st.button("🚀 Predict My Performance"):
         importance_data.set_index("Feature")
     )
         # ==========================
+    # PERFORMANCE GOAL
+    # ==========================
+
+    st.subheader("🎯 Performance Goal")
+
+    target_score = st.slider(
+        "Set Your Target Performance",
+        min_value=50,
+        max_value=100,
+        value=90,
+        step=1
+    )
+
+    improvement_needed = max(
+        0,
+        target_score - predicted_score
+    )
+
+    if improvement_needed > 0:
+
+        st.info(
+            f"📈 You need approximately "
+            f"{improvement_needed:.1f} more points "
+            f"to reach your target of {target_score}/100."
+        )
+
+    else:
+
+        st.success(
+            f"🎉 You have already reached your target "
+            f"of {target_score}/100!"
+        )
+        
+        # ==========================
     # AI PERFORMANCE SUMMARY
     # ==========================
 
