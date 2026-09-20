@@ -186,14 +186,14 @@ st.bar_chart(
 
 
     # Strengths and weaknesses
-    areas = {
-        "Attendance": attendance,
-        "Internal Marks": internal,
-        "Assignment Score": assignment,
-        "Quiz Score": quiz,
-        "Study Hours": study_hours,
-        "CGPA": cgpa * 10
-    }
+areas = {
+    "Attendance": attendance,
+    "Internal Marks": internal,
+    "Assignment Score": assignment,
+    "Quiz Score": quiz,
+    "Study Hours": study_hours,
+    "CGPA": cgpa * 10
+}
 
     strong_areas = [
         name for name, score in areas.items()
