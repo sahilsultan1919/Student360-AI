@@ -233,6 +233,20 @@ if st.button("🚀 Predict My Performance"):
         risk = "Medium"
     else:
         risk = "Low"
+        
+         # ==========================
+    # PERFORMANCE LEVEL
+    # ==========================
+
+    if predicted_score >= 80:
+        performance_level = "Excellent 🏆"
+    elif predicted_score >= 70:
+        performance_level = "Good 👍"
+    elif predicted_score >= 50:
+        performance_level = "Needs Improvement 📈"
+    else:
+        performance_level = "At Risk ⚠️"  
+        
 
     # ==========================
     # RESULTS
@@ -259,6 +273,10 @@ if st.button("🚀 Predict My Performance"):
             "Academic Risk",
             risk
         )
+          st.metric(
+        "Performance Level",
+        performance_level
+          )  
 
     # ==========================
     # PERFORMANCE DASHBOARD
