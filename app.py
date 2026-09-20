@@ -95,6 +95,19 @@ skill = st.slider(
     max_value=5,
     value=3
 )
+career_goal = st.selectbox(
+    "Career Goal",
+    [
+        "AI/ML Engineer",
+        "Data Scientist",
+        "Software Developer",
+        "Data Analyst",
+        "Cybersecurity",
+        "Cloud/DevOps",
+        "Higher Studies",
+        "Other"
+    ]
+)
 
 # Prediction button
 if st.button("🚀 Predict My Performance"):
