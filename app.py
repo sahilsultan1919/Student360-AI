@@ -306,37 +306,37 @@ st.bar_chart(
     height=400
 )
 
-    # ==========================
-    # EXPLAINABLE AI
-    # ==========================
+# ==========================
+# EXPLAINABLE AI
+# ==========================
 
-    st.subheader("🔍 Why This Prediction?")
+st.subheader("🔍 Why This Prediction?")
 
-    feature_names = [
-        "Semester",
-        "CGPA",
-        "Attendance",
-        "Internal Marks",
-        "Assignment Score",
-        "Quiz Score",
-        "Study Hours",
-        "Backlogs",
-        "Technical Skill"
-    ]
+feature_names = [
+    "Semester",
+    "CGPA",
+    "Attendance",
+    "Internal Marks",
+    "Assignment Score",
+    "Quiz Score",
+    "Study Hours",
+    "Backlogs",
+    "Technical Skill"
+]
 
-    importance_data = pd.DataFrame({
-        "Feature": feature_names,
-        "Importance": model.feature_importances_
-    })
+importance_data = pd.DataFrame({
+    "Feature": feature_names,
+    "Importance": model.feature_importances_
+})
 
-    importance_data = importance_data.sort_values(
-        "Importance",
-        ascending=False
-    )
+importance_data = importance_data.sort_values(
+    "Importance",
+    ascending=False
+)
 
-    st.bar_chart(
-        importance_data.set_index("Feature")
-    )
+st.bar_chart(
+    importance_data.set_index("Feature")
+)
 
     # ==========================
     # PERFORMANCE GOAL
