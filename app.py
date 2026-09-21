@@ -255,7 +255,6 @@ if st.button("🚀 Predict My Performance"):
 
     st.header("📊 Your Results")
 
-    # Performance metrics
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -277,66 +276,72 @@ if st.button("🚀 Predict My Performance"):
         )
 
     # ==========================
-# PERFORMANCE DASHBOARD
-# ==========================
+    # PERFORMANCE DASHBOARD
+    # ==========================
 
-st.subheader("📈 Performance Dashboard")
+    st.subheader("📈 Performance Dashboard")
 
-chart_data = pd.DataFrame({
-    "Area": [
+    chart_data = pd.DataFrame({
+        "Area": [
+            "CGPA",
+            "Attendance",
+            "Internal Marks",
+            "Assignment",
+            "Quiz"
+        ],
+        "Score": [
+            float(cgpa * 10),
+            float(attendance),
+            float(internal),
+            float(assignment),
+            float(quiz)
+        ]
+    })
+
+    st.bar_chart(
+        chart_data,
+        x="Area",
+        y="Score",
+        height=400
+    )
+
+    # ==========================
+    # EXPLAINABLE AI
+    # ==========================
+
+    st.subheader("🔍 Why This Prediction?")
+
+    feature_names = [
+        "Semester",
         "CGPA",
         "Attendance",
         "Internal Marks",
-        "Assignment",
-        "Quiz"
-    ],
-    "Score": [
-        float(cgpa * 10),
-        float(attendance),
-        float(internal),
-        float(assignment),
-        float(quiz)
+        "Assignment Score",
+        "Quiz Score",
+        "Study Hours",
+        "Backlogs",
+        "Technical Skill"
     ]
-})
 
-st.bar_chart(
-    chart_data,
-    x="Area",
-    y="Score",
-    height=400
-)
+    importance_data = pd.DataFrame({
+        "Feature": feature_names,
+        "Importance": model.feature_importances_
+    })
 
-# ==========================
-# EXPLAINABLE AI
-# ==========================
+    importance_data = importance_data.sort_values(
+        "Importance",
+        ascending=False
+    )
 
-st.subheader("🔍 Why This Prediction?")
+    st.bar_chart(
+        importance_data.set_index("Feature"),
+        height=400
+    )
 
-feature_names = [
-    "Semester",
-    "CGPA",
-    "Attendance",
-    "Internal Marks",
-    "Assignment Score",
-    "Quiz Score",
-    "Study Hours",
-    "Backlogs",
-    "Technical Skill"
-]
-
-importance_data = pd.DataFrame({
-    "Feature": feature_names,
-    "Importance": model.feature_importances_
-})
-
-importance_data = importance_data.sort_values(
-    "Importance",
-    ascending=False
-)
-
-st.bar_chart(
-    importance_data.set_index("Feature")
-)
+    st.caption(
+        "Feature importance shows which inputs the model relied on most. "
+        "It does not prove that a feature directly causes performance."
+    )
 
     # ==========================
     # PERFORMANCE GOAL
@@ -436,6 +441,7 @@ st.bar_chart(
     ]
 
     # Strong areas
+
     st.subheader("💪 Strong Areas")
 
     if strong_areas:
@@ -450,6 +456,7 @@ st.bar_chart(
         )
 
     # Areas to improve
+
     st.subheader("⚠️ Areas to Improve")
 
     if weak_areas:
@@ -473,7 +480,6 @@ st.bar_chart(
         "📚 Personalized Weekly Study Plan"
     )
 
-    # Recommended study time
     recommended_hours = max(
         2.0,
         study_hours + 1.0
@@ -484,7 +490,6 @@ st.bar_chart(
         f"{recommended_hours:.1f} hours/day"
     )
 
-    # Weekly plan
     if weak_areas:
 
         st.write(
@@ -619,7 +624,10 @@ st.bar_chart(
             "coding practice and small projects."
         )
 
-    # Career recommendations
+    # ==========================
+    # CAREER RECOMMENDATIONS
+    # ==========================
+
     career_recommendations = {
 
         "AI/ML Engineer":
@@ -659,7 +667,10 @@ st.bar_chart(
         career_recommendations[career_goal]
     )
 
-    # Display recommendations
+    # ==========================
+    # DISPLAY RECOMMENDATIONS
+    # ==========================
+
     if recommendations:
 
         for i, recommendation in enumerate(
@@ -688,4 +699,4 @@ st.divider()
 st.caption(
     "Student360 AI is a prototype trained on synthetic student data. "
     "Predictions are estimates and should not be treated as guaranteed outcomes."
-)   
+)
