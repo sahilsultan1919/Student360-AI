@@ -277,31 +277,34 @@ if st.button("🚀 Predict My Performance"):
         )
 
     # ==========================
-    # PERFORMANCE DASHBOARD
-    # ==========================
+# PERFORMANCE DASHBOARD
+# ==========================
 
-    st.subheader("📈 Performance Dashboard")
+st.subheader("📈 Performance Dashboard")
 
-    chart_data = pd.DataFrame({
-        "Area": [
-            "CGPA",
-            "Attendance",
-            "Internal Marks",
-            "Assignment",
-            "Quiz"
-        ],
-        "Score": [
-            cgpa * 10,
-            attendance,
-            internal,
-            assignment,
-            quiz
-        ]
-    })
+chart_data = pd.DataFrame({
+    "Area": [
+        "CGPA",
+        "Attendance",
+        "Internal Marks",
+        "Assignment",
+        "Quiz"
+    ],
+    "Score": [
+        float(cgpa * 10),
+        float(attendance),
+        float(internal),
+        float(assignment),
+        float(quiz)
+    ]
+})
 
-    st.bar_chart(
-        chart_data.set_index("Area")
-    )
+st.bar_chart(
+    chart_data,
+    x="Area",
+    y="Score",
+    height=400
+)
 
     # ==========================
     # EXPLAINABLE AI
