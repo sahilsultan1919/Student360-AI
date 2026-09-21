@@ -220,6 +220,32 @@ if st.button("🚀 Predict My Performance"):
     predicted_score = float(
         model.predict(new_student)[0]
     )
+    # Save prediction history
+history_data = pd.DataFrame({
+    "Date": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
+    "Semester": [semester],
+    "CGPA": [cgpa],
+    "Attendance": [attendance],
+    "Internal_Marks": [internal],
+    "Assignment_Score": [assignment],
+    "Quiz_Score": [quiz],
+    "Study_Hours": [study_hours],
+    "Backlogs": [backlogs],
+    "Skill_Level": [skill],
+    "Predicted_Performance": [predicted_score]
+})
+
+try:
+    existing_history = pd.read_csv(HISTORY_FILE)
+    updated_history = pd.concat(
+        [existing_history, history_data],
+        ignore_index=True
+    )
+except FileNotFoundError:
+    updated_history = history_data
+
+updated_history.to_csv(HISTORY_FILE, index=False)
+    
 
     predicted_score = max(
         0,
