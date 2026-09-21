@@ -1051,6 +1051,440 @@ if st.button("🚀 Predict My Performance"):
             "class notes regularly."
         )
 
+      if assignment < 60:
 
-    if assignment < 60:
+    recommendations.append(
+        "Complete assignments on time and "
+        "improve assignment quality."
+    )
+
+if quiz < 60:
+
+    recommendations.append(
+        "Practice more quizzes and "
+        "topic-wise tests."
+    )
+
+if study_hours < 2:
+
+    recommendations.append(
+        "Gradually increase daily study "
+        "time to 2–3 hours."
+    )
+
+if cgpa < 6.5:
+
+    recommendations.append(
+        "Focus on weak subjects and create "
+        "a consistent weekly study plan."
+    )
+
+if backlogs > 0:
+
+    recommendations.append(
+        "Prioritize clearing backlogs while "
+        "maintaining current-semester studies."
+    )
+
+if skill < 3:
+
+    recommendations.append(
+        "Develop technical skills through "
+        "coding practice and small projects."
+    )
+
+
+# ========================================================
+# CAREER RECOMMENDATIONS
+# ========================================================
+
+career_recommendations = {
+
+    "AI/ML Engineer":
+        "Build Python, NumPy, Pandas, "
+        "Machine Learning and AI projects.",
+
+    "Data Scientist":
+        "Focus on Python, SQL, statistics, "
+        "data analysis and visualization.",
+
+    "Software Developer":
+        "Strengthen DSA, OOP, Git and "
+        "software development projects.",
+
+    "Data Analyst":
+        "Learn SQL, Excel, Python, Pandas "
+        "and data visualization.",
+
+    "Cybersecurity":
+        "Learn networking, Linux, security "
+        "fundamentals and ethical security practices.",
+
+    "Cloud/DevOps":
+        "Learn Linux, Git, Docker, cloud "
+        "fundamentals and CI/CD.",
+
+    "Higher Studies":
+        "Focus on academic performance, "
+        "core subjects and relevant entrance exams.",
+
+    "Other":
+        "Build strong programming fundamentals "
+        "and complete practical projects."
+}
+
+
+recommendations.append(
+    career_recommendations[career_goal]
+)
+
+
+# ========================================================
+# DISPLAY RECOMMENDATIONS
+# ========================================================
+
+if recommendations:
+
+    for i, recommendation in enumerate(
+        recommendations,
+        1
+    ):
+
+        st.write(
+            f"**{i}.** {recommendation}"
+        )
+
+else:
+
+    st.success(
+        "Your current academic indicators are "
+        "satisfactory. Continue your current study routine."
+    )
+
+
+# ========================================================
+# CAREER ROADMAP
+# ========================================================
+
+st.divider()
+
+st.subheader("🚀 Career Skill Roadmap")
+
+
+roadmap = {
+
+    "AI/ML Engineer": [
+        "Python",
+        "NumPy & Pandas",
+        "Statistics",
+        "Machine Learning",
+        "Deep Learning",
+        "Projects",
+        "Model Deployment"
+    ],
+
+    "Data Scientist": [
+        "Python",
+        "SQL",
+        "Statistics",
+        "Pandas",
+        "Data Visualization",
+        "Machine Learning",
+        "Projects"
+    ],
+
+    "Software Developer": [
+        "Programming",
+        "OOP",
+        "DSA",
+        "Git & GitHub",
+        "Databases",
+        "Projects",
+        "System Design Basics"
+    ],
+
+    "Data Analyst": [
+        "Excel",
+        "SQL",
+        "Python",
+        "Pandas",
+        "Statistics",
+        "Visualization",
+        "Projects"
+    ],
+
+    "Cybersecurity": [
+        "Networking",
+        "Linux",
+        "Python",
+        "Security Fundamentals",
+        "Web Security",
+        "Security Tools",
+        "Projects"
+    ],
+
+    "Cloud/DevOps": [
+        "Linux",
+        "Git",
+        "Docker",
+        "Cloud Basics",
+        "CI/CD",
+        "Networking",
+        "Projects"
+    ],
+
+    "Higher Studies": [
+        "Core Subjects",
+        "Academic Performance",
+        "Research Basics",
+        "Problem Solving",
+        "Entrance Exam Preparation",
+        "Projects",
+        "Technical Writing"
+    ],
+
+    "Other": [
+        "Programming",
+        "Problem Solving",
+        "Git & GitHub",
+        "Communication",
+        "Projects",
+        "Domain Skills"
+    ]
+}
+
+
+selected_roadmap = roadmap[career_goal]
+
+
+for index, skill_name in enumerate(
+    selected_roadmap,
+    1
+):
+
+    st.write(
+        f"**{index}.** {skill_name}"
+    )
+
+
+# ========================================================
+# PROGRESS HISTORY
+# ========================================================
+
+st.divider()
+
+st.subheader("📚 Student Progress History")
+
+
+if os.path.exists(HISTORY_FILE):
+
+    try:
+
+        history = pd.read_csv(
+            HISTORY_FILE
+        )
+
+        if not history.empty:
+
+            latest_score = float(
+                history[
+                    "Predicted_Performance"
+                ].iloc[-1]
+            )
+
+            average_score = float(
+                history[
+                    "Predicted_Performance"
+                ].mean()
+            )
+
+            best_score = float(
+                history[
+                    "Predicted_Performance"
+                ].max()
+            )
+
+            hcol1, hcol2, hcol3 = st.columns(3)
+
+            with hcol1:
+
+                st.metric(
+                    "Latest",
+                    f"{latest_score:.2f}"
+                )
+
+            with hcol2:
+
+                st.metric(
+                    "Average",
+                    f"{average_score:.2f}"
+                )
+
+            with hcol3:
+
+                st.metric(
+                    "Best",
+                    f"{best_score:.2f}"
+                )
+
+            st.write(
+                "### 📈 Performance Trend"
+            )
+
+            trend_data = history[
+                ["Date", "Predicted_Performance"]
+            ].copy()
+
+            trend_data["Date"] = pd.to_datetime(
+                trend_data["Date"],
+                errors="coerce"
+            )
+
+            trend_data = trend_data.dropna(
+                subset=["Date"]
+            )
+
+            trend_data = trend_data.set_index(
+                "Date"
+            )
+
+            st.line_chart(
+                trend_data[
+                    "Predicted_Performance"
+                ]
+            )
+
+            if len(history) >= 2:
+
+                previous_score = float(
+                    history[
+                        "Predicted_Performance"
+                    ].iloc[-2]
+                )
+
+                change = (
+                    latest_score
+                    - previous_score
+                )
+
+                st.write(
+                    "### 📊 Latest Change"
+                )
+
+                if change > 0:
+
+                    st.success(
+                        f"📈 Your latest predicted "
+                        f"performance increased by "
+                        f"{change:.2f} points."
+                    )
+
+                elif change < 0:
+
+                    st.warning(
+                        f"📉 Your latest predicted "
+                        f"performance decreased by "
+                        f"{abs(change):.2f} points."
+                    )
+
+                else:
+
+                    st.info(
+                        "Your latest predicted performance "
+                        "remained unchanged."
+                    )
+
+            st.write(
+                "### 🎯 Historical Target Tracking"
+            )
+
+            history_target = st.slider(
+                "Choose a target for tracking",
+                min_value=50,
+                max_value=100,
+                value=90,
+                step=1,
+                key="history_target"
+            )
+
+            target_difference = (
+                history_target - latest_score
+            )
+
+            if target_difference > 0:
+
+                st.info(
+                    f"You are approximately "
+                    f"{target_difference:.2f} points "
+                    f"below your target."
+                )
+
+            else:
+
+                st.success(
+                    "🎉 Your latest predicted "
+                    "performance has reached your target."
+                )
+
+            st.write(
+                "### 🗂️ Prediction Records"
+            )
+
+            st.dataframe(
+                history,
+                use_container_width=True
+            )
+
+            csv_data = history.to_csv(
+                index=False
+            )
+
+            st.download_button(
+                label="⬇️ Download Progress History",
+                data=csv_data,
+                file_name="student_progress.csv",
+                mime="text/csv"
+            )
+
+        else:
+
+            st.info(
+                "No prediction history available yet."
+            )
+
+    except Exception as e:
+
+        st.warning(
+            f"Could not read progress history: {e}"
+        )
+
+else:
+
+    st.info(
+        "Your prediction history will appear here "
+        "after you make your first prediction."
+    )
+
+
+# ========================================================
+# FINAL DISCLAIMER
+# ========================================================
+
+st.divider()
+
+st.caption(
+    "Student360 AI is a prototype trained on synthetic "
+    "student data. Predictions are estimates and should "
+    "not be treated as guaranteed academic outcomes."
+)
+
+st.caption(
+    "Feature importance describes model behavior and "
+    "does not establish causal relationships."
+)
+
+st.caption(
+    "Student data should be handled responsibly and "
+    "sensitive personal information should not be entered."
+    )  
 
