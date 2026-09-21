@@ -194,9 +194,9 @@ if st.button("🔮 Simulate Performance"):
 
 if st.button("🚀 Predict My Performance"):
 
-    # --------------------------
+    # ==========================
     # PREPARE STUDENT DATA
-    # --------------------------
+    # ==========================
 
     new_student = pd.DataFrame({
         "Semester": [semester],
@@ -210,9 +210,9 @@ if st.button("🚀 Predict My Performance"):
         "Skill_Level": [skill]
     })
 
-    # --------------------------
+    # ==========================
     # ML PREDICTION
-    # --------------------------
+    # ==========================
 
     predicted_score = float(
         model.predict(new_student)[0]
@@ -223,9 +223,9 @@ if st.button("🚀 Predict My Performance"):
         min(100, predicted_score)
     )
 
-    # --------------------------
+    # ==========================
     # RISK CALCULATION
-    # --------------------------
+    # ==========================
 
     if predicted_score < 50:
         risk = "High"
@@ -233,8 +233,8 @@ if st.button("🚀 Predict My Performance"):
         risk = "Medium"
     else:
         risk = "Low"
-        
-         # ==========================
+
+    # ==========================
     # PERFORMANCE LEVEL
     # ==========================
 
@@ -245,8 +245,7 @@ if st.button("🚀 Predict My Performance"):
     elif predicted_score >= 50:
         performance_level = "Needs Improvement 📈"
     else:
-        performance_level = "At Risk ⚠️"  
-        
+        performance_level = "At Risk ⚠️"
 
     # ==========================
     # RESULTS
@@ -256,11 +255,8 @@ if st.button("🚀 Predict My Performance"):
 
     st.header("📊 Your Results")
 
-    # --------------------------
-    # PERFORMANCE METRICS
-    # --------------------------
-
-    col1, col2 = st.columns(2)
+    # Performance metrics
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         st.metric(
@@ -273,10 +269,12 @@ if st.button("🚀 Predict My Performance"):
             "Academic Risk",
             risk
         )
-          st.metric(
-        "Performance Level",
-        performance_level
-          )  
+
+    with col3:
+        st.metric(
+            "Performance Level",
+            performance_level
+        )
 
     # ==========================
     # PERFORMANCE DASHBOARD
@@ -304,8 +302,8 @@ if st.button("🚀 Predict My Performance"):
     st.bar_chart(
         chart_data.set_index("Area")
     )
-    
-        # ==========================
+
+    # ==========================
     # EXPLAINABLE AI
     # ==========================
 
@@ -336,7 +334,8 @@ if st.button("🚀 Predict My Performance"):
     st.bar_chart(
         importance_data.set_index("Feature")
     )
-        # ==========================
+
+    # ==========================
     # PERFORMANCE GOAL
     # ==========================
 
@@ -369,14 +368,15 @@ if st.button("🚀 Predict My Performance"):
             f"🎉 You have already reached your target "
             f"of {target_score}/100!"
         )
-        
-        # ==========================
+
+    # ==========================
     # AI PERFORMANCE SUMMARY
     # ==========================
 
     st.subheader("🧠 AI Performance Summary")
 
     if predicted_score >= 80:
+
         summary = (
             "Your predicted performance is strong. "
             "Maintain your current academic routine and continue "
@@ -384,18 +384,21 @@ if st.button("🚀 Predict My Performance"):
         )
 
     elif predicted_score >= 70:
+
         summary = (
             "Your predicted performance is satisfactory. "
             "Focus on your weaker areas to improve your overall performance."
         )
 
     elif predicted_score >= 50:
+
         summary = (
             "Your predicted performance needs improvement. "
             "Follow the personalized study plan and focus on your weak areas."
         )
 
     else:
+
         summary = (
             "Your predicted performance indicates a higher academic risk. "
             "Focus immediately on weak areas, study consistency, "
@@ -403,7 +406,6 @@ if st.button("🚀 Predict My Performance"):
         )
 
     st.info(summary)
-    
 
     # ==========================
     # STRENGTHS & WEAKNESSES
@@ -430,10 +432,7 @@ if st.button("🚀 Predict My Performance"):
         if score < 60
     ]
 
-    # --------------------------
-    # STRONG AREAS
-    # --------------------------
-
+    # Strong areas
     st.subheader("💪 Strong Areas")
 
     if strong_areas:
@@ -447,10 +446,7 @@ if st.button("🚀 Predict My Performance"):
             "No major strong area identified."
         )
 
-    # --------------------------
-    # AREAS TO IMPROVE
-    # --------------------------
-
+    # Areas to improve
     st.subheader("⚠️ Areas to Improve")
 
     if weak_areas:
@@ -475,7 +471,6 @@ if st.button("🚀 Predict My Performance"):
     )
 
     # Recommended study time
-
     recommended_hours = max(
         2.0,
         study_hours + 1.0
@@ -487,7 +482,6 @@ if st.button("🚀 Predict My Performance"):
     )
 
     # Weekly plan
-
     if weak_areas:
 
         st.write(
@@ -622,10 +616,7 @@ if st.button("🚀 Predict My Performance"):
             "coding practice and small projects."
         )
 
-    # --------------------------
-    # CAREER RECOMMENDATIONS
-    # --------------------------
-
+    # Career recommendations
     career_recommendations = {
 
         "AI/ML Engineer":
@@ -665,10 +656,7 @@ if st.button("🚀 Predict My Performance"):
         career_recommendations[career_goal]
     )
 
-    # --------------------------
-    # DISPLAY RECOMMENDATIONS
-    # --------------------------
-
+    # Display recommendations
     if recommendations:
 
         for i, recommendation in enumerate(
@@ -697,4 +685,4 @@ st.divider()
 st.caption(
     "Student360 AI is a prototype trained on synthetic student data. "
     "Predictions are estimates and should not be treated as guaranteed outcomes."
-)
+)   
