@@ -1090,7 +1090,29 @@ if os.path.exists(HISTORY_FILE):
                     "🎉 Your latest predicted "
                     "performance has reached your target."
                 )
+                
+# ==========================
+# PERFORMANCE TREND CHART
+# ==========================
 
+st.subheader("📈 Performance Trend")
+
+trend_data = history.copy()
+
+trend_data["Date"] = pd.to_datetime(trend_data["Date"])
+
+trend_data = trend_data.sort_values("Date")
+
+st.line_chart(
+    trend_data.set_index("Date")["Predicted_Performance"],
+    height=350
+)
+
+st.caption(
+    "This chart shows how your predicted academic performance "
+    "has changed over time."
+)
+           
             st.write("### 🗂️ Prediction Records")
 
             st.dataframe(
