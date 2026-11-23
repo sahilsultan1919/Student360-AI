@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAHIL360AI | Student Performance Predictor</title>
+<meta name="description" content="SAHIL360AI is a student-developed academic performance prediction and study planning project.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#08111f;color:#edf3ff;line-height:1.7
+}
+a{text-decoration:none;color:inherit}
+.container{width:min(1100px,90%);margin:auto}
+header{
+position:sticky;top:0;z-index:10;
+background:rgba(8,17,31,.94);
+border-bottom:1px solid #1d3049;
+backdrop-filter:blur(12px)
+}
+nav{min-height:70px;display:flex;align-items:center;
+justify-content:space-between;gap:20px}
+.logo{font-size:23px;font-weight:800;letter-spacing:1px}
+.logo span{color:#55a5ff}
+.navlinks{display:flex;gap:24px;font-size:14px;color:#b7c5d9}
+.navlinks a:hover{color:#69adff}
+.hero{padding:100px 0 90px}
+.tag{color:#78baff;font-size:13px;letter-spacing:2px;
+text-transform:uppercase;font-weight:bold}
+h1{font-size:clamp(38px,7vw,68px);line-height:1.12;
+margin:18px 0}
+h1 span{color:#62aaff}
+.hero p,.section-intro{color:#aebed3;max-width:680px}
+.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-block;padding:13px 21px;border-radius:9px;
+font-weight:bold;font-size:14px;transition:.2s}
+.primary{background:#267de0;color:white}
+.primary:hover{background:#4395f3;transform:translateY(-2px)}
+.secondary{border:1px solid #38516f;color:#dceaff}
+.secondary:hover{border-color:#6aaeff}
+section{padding:75px 0;border-top:1px solid #192b42}
+h2{font-size:clamp(27px,4vw,38px);margin-bottom:12px}
+.section-intro{margin-bottom:30px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{
+background:#101e31;border:1px solid #203650;
+border-radius:14px;padding:24px;transition:.2s
+}
+.card:hover{transform:translateY(-4px);border-color:#478bd2}
+.card h3{margin-bottom:9px;font-size:18px}
+.card p{color:#aebed3;font-size:14px}
+.icon{font-size:25px;margin-bottom:12px}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}
+.profile{
+min-height:330px;border:1px solid #29415e;
+border-radius:18px;background:#101e31;
+display:flex;align-items:center;justify-content:center;
+overflow:hidden
+}
+.profile img{width:100%;height:100%;max-height:430px;
+object-fit:cover}
+.profile-placeholder{padding:30px;color:#aebed3;text-align:center}
+.info{color:#aebed3;margin-top:10px}
+.pill{display:inline-block;border:1px solid #34516f;
+padding:6px 11px;border-radius:30px;font-size:12px;
+color:#a9ceff;margin:5px 5px 0 0}
+.steps{counter-reset:step}
+.step{position:relative;padding:18px 18px 18px 58px;
+border-bottom:1px solid #203650;color:#b8c8dd}
+.step:before{counter-increment:step;content:counter(step);
+position:absolute;left:12px;top:18px;background:#1c5794;
+width:29px;height:29px;border-radius:50%;
+display:grid;place-items:center;color:white;font-weight:bold}
+.cta{
+background:linear-gradient(120deg,#102b4b,#102039);
+border:1px solid #294d75;border-radius:18px;padding:38px
+}
+footer{padding:30px 0;color:#8295ad;font-size:13px;
+border-top:1px solid #203047}
+@media(max-width:750px){
+.navlinks{gap:12px;font-size:12px}
+.grid{grid-template-columns:1fr}
+.about{grid-template-columns:1fr}
+.hero{padding:75px 0}
+}
+@media(max-width:430px){
+nav{align-items:flex-start;flex-direction:column;padding:14px 0}
+.navlinks{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container">
+<nav>
+<a class="logo" href="#">SAHIL<span>360AI</span></a>
+<div class="navlinks">
+<a href="#about">About</a>
+<a href="#features">Features</a>
+<a href="#workflow">How it works</a>
+<a href="#team">Team</a>
+</div>
+</nav>
+</div>
+</header>
+
+<main>
+<div class="container hero">
+<div class="tag">Student-developed academic project</div>
+<h1>Make sense of your progress.<br><span>Plan what comes next.</span></h1>
+<p>
+SAHIL360AI is a student performance prediction project
+designed to help students understand their academic progress,
+identify areas for improvement and plan their studies.
+</p>
+<div class="actions">
+<a class="btn primary"
+href="https://student360-ai-iupj3vsbsfdrb4czc6p4ue.streamlit.app/"
+target="_blank" rel="noopener">Open Prediction Dashboard ↗</a>
+<a class="btn secondary" href="#about">Explore Project</a>
+</div>
+</div>
+
+<section id="about">
+<div class="container">
+<div class="about">
+<div>
+<div class="tag">About the project</div>
+<h2>A practical approach to student performance</h2>
+<p class="section-intro">
+The project uses academic information such as attendance,
+internal marks, assignments, quizzes and study hours to
+estimate student performance and provide useful study guidance.
+</p>
+<p class="info">
+It is designed as an academic support tool. Its predictions
+are estimates based on the available model and data, not
+guaranteed academic results.
+</p>
+</div>
+<div class="card">
+<h3>Project information</h3>
+<p><strong>Project:</strong> Student360 AI</p>
+<p><strong>Website:</strong> SAHIL360AI</p>
+<p><strong>Domain:</strong> Artificial Intelligence & Machine Learning</p>
+<p><strong>Developer:</strong> SAHIL SULTAN</p>
+<p><strong>Course:</strong> B.Tech CSE (AI & ML)</p>
+<p><strong>Semester:</strong> 5th Semester</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="features">
+<div class="container">
+<div class="tag">What it offers</div>
+<h2>Project features</h2>
+<p class="section-intro">The current dashboard brings academic inputs together
+to help students review their progress.</p>
+<div class="grid">
+<div class="card"><div class="icon">📊</div>
+<h3>Performance Prediction</h3>
+<p>Estimates student performance using academic and study-related inputs.</p></div>
+<div class="card"><div class="icon">🎯</div>
+<h3>Academic Risk Analysis</h3>
+<p>Displays a risk category to help students pay attention to areas that may need improvement.</p></div>
+<div class="card"><div class="icon">📈</div>
+<h3>What-If Simulator</h3>
+<p>Explore how changing selected inputs may affect the model's prediction.</p></div>
+<div class="card"><div class="icon">📚</div>
+<h3>Study Recommendations</h3>
+<p>Provides study suggestions based on the entered information.</p></div>
+<div class="card"><div class="icon">📉</div>
+<h3>Visual Analysis</h3>
+<p>View charts and information about academic performance factors.</p></div>
+<div class="card"><div class="icon">🗓️</div>
+<h3>Study Planning</h3>
+<p>Review a suggested weekly study plan and focus areas.</p></div>
+</div>
+</div>
+</section>
+
+<section id="workflow">
+<div class="container">
+<div class="tag">Simple workflow</div>
+<h2>How it works</h2>
+<div class="card steps">
+<div class="step">Enter academic details such as CGPA, attendance and marks.</div>
+<div class="step">Add study hours, backlogs and other requested inputs.</div>
+<div class="step">Submit the information to the prediction dashboard.</div>
+<div class="step">Review the estimated result, analysis and study suggestions.</div>
+</div>
+</div>
+</section>
+
+<section id="team">
+<div class="container">
+<div class="tag">People behind the project</div>
+<h2>Meet the team</h2>
+<div class="grid">
+<div class="card">
+<h3>SAHIL SULTAN</h3>
+<p>Developer</p>
+<div class="pill">B.Tech CSE AI & ML</div>
+<div class="pill">5th Semester</div>
+</div>
+<div class="card">
+<h3>Shaheem Iqbal</h3>
+<p>Team Member</p>
+</div>
+<div class="card">
+<h3>Hafiz Ashraf</h3>
+<p>Team Member</p>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="cta">
+<div class="tag">Try the project</div>
+<h2>Explore the Student360 AI dashboard</h2>
+<p class="section-intro">Open the working application to enter academic details
+and explore its performance analysis features.</p>
+<a class="btn primary"
+href="https://student360-ai-iupj3vsbsfdrb4czc6p4ue.streamlit.app/"
+target="_blank" rel="noopener">Get Started ↗</a>
+</div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="container">
+<p><strong>SAHIL360AI</strong> — Developed by SAHIL SULTAN</p>
+<p>Student academic project · B.Tech CSE (AI & ML)</p>
+<p>© 2026 SAHIL360AI. All rights reserved.</p>
+</div>
+</footer>
+</body>
+</html>
